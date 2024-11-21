@@ -1,0 +1,7 @@
+{
+    "admin@gmail.com": {
+        "name": "Marjia",
+        "password": "scrypt:32768:8:1$IKYXohuU7zbiq7NX$6092968f99487ec6757495a17835502ac69c58577292e02140d5147082f2e476f9c5827652d586603b22b04840c46c54a5b3673e5afdeadb4540b0c0d9908808",
+        "role": "Admin"
+    }
+}
