@@ -24,7 +24,8 @@ authorizations = {
     'Bearer Auth': {
         'type': 'apiKey',
         'in': 'header',
-        'name': 'Authorization'
+        'name': 'Authorization',
+        'description': 'Enter your Bearer token in the format: Bearer <token>'
     }
 }
 
@@ -33,13 +34,41 @@ api = Api(
     app,
     version='1.0',
     title='Authorization Service',
-    description='Authentication and Authorization Service',
+    description='A service for handling authentication and authorization with JWT tokens',
     authorizations=authorizations,
     security='Bearer Auth'
+      # Swagger UI will be available at /docs
 )
 
 # Namespace
-auth_ns = api.namespace('auth', description='Authorization operations')
+auth_ns = api.namespace(
+    'auth',
+    description='Authorization operations including token validation'
+)
+
+# Define models for Swagger documentation
+token_response = auth_ns.model('TokenResponse', {
+    'email': fields.String(
+        description='User email',
+        example='user@example.com'
+    ),
+    
+    'role': fields.String(
+        description='User role',
+        example='admin'
+    ),
+    'exp': fields.Integer(
+        description='Token issued at timestamp',
+        example=1735603200
+    )
+})
+
+error_response = auth_ns.model('ErrorResponse', {
+    'message': fields.String(
+        description='Error message',
+        example='Token has expired'
+    )
+})
 
 
 def token_required(roles: Optional[list] = None):
@@ -87,11 +116,27 @@ def token_required(roles: Optional[list] = None):
     return decorator
 
 
-
 @auth_ns.route('/validate')
 class TokenValidation(Resource):
+    @auth_ns.doc(
+        description='Validate a JWT token and return its decoded contents',
+        responses={
+            200: ('Token is valid', token_response),
+            401: ('Authentication error', error_response)
+        }
+    )
+    @auth_ns.doc(security='Bearer Auth')
     def get(self) -> Union[Dict, tuple]:
-        """Validate JWT token"""
+        """
+        Validate JWT Token
+        
+        This endpoint validates the provided JWT token and returns its decoded contents
+        if valid. The token should be provided in the Authorization header using the
+        Bearer <token>.
+        
+        Returns:
+            Union[Dict, tuple]: Decoded token data or error message with status code
+        """
         try:
             token = request.headers.get('Authorization', '').split(' ')[1]
         except IndexError:
