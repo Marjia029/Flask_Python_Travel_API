@@ -48,52 +48,53 @@ Install dependencies using the `requirements.txt` files included in each service
 Flask_Python_Travel_API/
 │
 ├── destination_service/
-│   ├── app.py
-│   ├── requirements.txt
-│   ├──models/
-│   |  └── destination.py
-|   |  └── destination_repository.py
-|   ├──controllers/
-│   |  └── destination_controller.py
-|   ├──routes/
-│   |  └── destination_routes.py
-|   ├──services/
-│   |  └── auth_service.py
-|   ├──tests/
-│   |  └── __init__.py
-│   |  └── test_auth.py
-│   |  └── test_destination.py
-|   |  └── test_destination_repository.py
-│   |  └── test_destination_controller.py
-│   |  └── test_destination_routes.py
-├── user_service/
-│   ├── app.py
-│   ├── requirements.txt
-│   ├──models/
-│   |  └── user.py
-│   ├──repoisitory/
-|   |  └── user_repository.py
-|   ├──controllers/
-│   |  └── user_controller.py
-|   ├──routes/
-│   |  └── user_routes.py
-|   ├──services/
-│   |  └── user_service.py
-|   ├──tests/
-│   |  └── __init__.py
-│   |  └── test_user.py
-|   |  └── test_destination_repository.py
-│   |  └── test_destination_controller.py
-│   |  └── test_destination_routes.py
-├── auth_service/
-│       ├── app.py
-│       ├── requirements.txt
-│       └── tests/
-│           └── __init__.py
-│           └── test_app.py
+│   ├── app.py                # Main application for the destination service
+│   ├── requirements.txt      # Dependencies for the destination service
+│   ├── models/               # Models for destination data
+│   │   ├── destination.py
+│   │   ├── destination_repository.py
+│   ├── controllers/          # Controllers for business logic
+│   │   ├── destination_controller.py
+│   ├── routes/               # Routes for API endpoints
+│   │   ├── destination_routes.py
+│   ├── services/             # Services for shared logic
+│   │   ├── auth_service.py
+│   ├── tests/                # Unit tests for the destination service
+│       ├── __init__.py
+│       ├── test_auth.py
+│       ├── test_destination.py
+│       ├── test_destination_repository.py
+│       ├── test_destination_controller.py
+│       ├── test_destination_routes.py
 │
-└── README.md
-```
+├── user_service/
+│   ├── app.py                # Main application for the user service
+│   ├── requirements.txt      # Dependencies for the user service
+│   ├── models/               # Models for user data
+│   │   ├── user.py
+│   ├── repository/           # Repositories for user data access
+│   │   ├── user_repository.py
+│   ├── controllers/          # Controllers for business logic
+│   │   ├── user_controller.py
+│   ├── routes/               # Routes for API endpoints
+│   │   ├── user_routes.py
+│   ├── services/             # Services for shared logic
+│   │   ├── user_service.py
+│   ├── tests/                # Unit tests for the user service
+│       ├── __init__.py
+│       ├── test_user.py
+│       ├── test_user_repository.py
+│       ├── test_user_controller.py
+│       ├── test_user_routes.py
+│
+├── auth_service/
+│   ├── app.py                # Main application for the auth service
+│   ├── requirements.txt      # Dependencies for the auth service
+│   ├── tests/                # Unit tests for the auth service
+│       ├── __init__.py
+│       ├── test_app.py
+│
+└── README.md                 # Documentation for the project
 
 ## **Setup Instructions**
 ### **1. Clone the repository**
