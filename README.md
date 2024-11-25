@@ -94,7 +94,8 @@ Flask_Python_Travel_API/
 │       ├── __init__.py
 │       ├── test_app.py
 │
-└── README.md                 # Documentation for the project
+└── README.md                # Documentation for the project
+```
 
 ## **Setup Instructions**
 ### **1. Clone the repository**
