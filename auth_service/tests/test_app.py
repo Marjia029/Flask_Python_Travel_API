@@ -1,7 +1,7 @@
 import unittest
 from app import app
 import jwt
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 
 
 class AuthServiceTests(unittest.TestCase):
@@ -35,7 +35,6 @@ class AuthServiceTests(unittest.TestCase):
         response = self.app.get('/auth/validate', headers={})
         self.assertEqual(response.status_code, 401)
         self.assertIn('Invalid Authorization header', response.json['message'])
-
 
     def test_validate_token_expired(self):
         """Test expired token."""

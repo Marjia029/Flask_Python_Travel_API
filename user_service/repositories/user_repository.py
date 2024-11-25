@@ -6,6 +6,7 @@ from models.user import UserDTO, UserRole
 
 logger = logging.getLogger(__name__)
 
+
 class UserRepository:
     def __init__(self, file_path: str):
         self.file_path = file_path

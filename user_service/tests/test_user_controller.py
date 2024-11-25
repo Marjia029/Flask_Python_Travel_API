@@ -26,7 +26,7 @@ class TestUserController(unittest.TestCase):
             'role': 'user'  # Adjusted to match the actual UserRole enum value
         }
         self.mock_user_service.hash_password.return_value = 'hashed_password'
-        self.mock_user_repository.create_user.return_value = None  # Mock repository behavior
+        self.mock_user_repository.create_user.return_value = None
 
         # Act
         response, status_code = self.controller.register_user(data)
@@ -39,7 +39,9 @@ class TestUserController(unittest.TestCase):
         self.assertEqual(status_code, 201)
         self.assertEqual(response['message'], 'User registered successfully')
         self.mock_user_repository.create_user.assert_called_once()
-        self.mock_user_service.hash_password.assert_called_once_with(data['password'])
+        self.mock_user_service.hash_password.assert_called_once_with(
+            data['password']
+        )
 
     def test_register_user_missing_fields(self):
         # Arrange
@@ -87,7 +89,9 @@ class TestUserController(unittest.TestCase):
         # Assert
         self.assertEqual(status_code, 200)
         self.assertIn('token', response)
-        self.mock_user_repository.get_user.assert_called_once_with(data['email'])
+        self.mock_user_repository.get_user.assert_called_once_with(
+            data['email']
+        )
         self.mock_user_service.verify_password.assert_called_once_with(
             'hashed_password', data['password']
         )
@@ -117,8 +121,18 @@ class TestUserController(unittest.TestCase):
     def test_get_all_users_success(self):
         # Arrange
         mock_users = [
-            UserDTO(email='user1@example.com', name='User One', role=UserRole.USER, password_hash='hash1'),
-            UserDTO(email='user2@example.com', name='User Two', role=UserRole.ADMIN, password_hash='hash2')
+            UserDTO(
+                email='user1@example.com',
+                name='User One',
+                role=UserRole.ADMIN,
+                password_hash='hash1'
+            ),
+            UserDTO(
+                email='user2@example.com',
+                name='User Two',
+                role=UserRole.USER,
+                password_hash='hash2'
+            )
         ]
         self.mock_user_repository.get_all_users.return_value = mock_users
 
@@ -133,11 +147,13 @@ class TestUserController(unittest.TestCase):
     def test_get_user_profile_success(self):
         # Arrange
         token = 'mock_token'
-        self.mock_user_service.verify_token.return_value = {'email': 'test@example.com'}
+        self.mock_user_service.verify_token.return_value = {
+            'email': 'test@example.com'
+        }
         mock_user = UserDTO(
-            email='test@example.com', 
-            name='Test User', 
-            role=UserRole.USER, 
+            email='test@example.com',
+            name='Test User',
+            role=UserRole.USER,
             password_hash='hashed_password'
         )
         self.mock_user_repository.get_user.return_value = mock_user
@@ -149,12 +165,16 @@ class TestUserController(unittest.TestCase):
         self.assertEqual(status_code, 200)
         self.assertEqual(response['email'], mock_user.email)
         self.mock_user_service.verify_token.assert_called_once_with(token)
-        self.mock_user_repository.get_user.assert_called_once_with('test@example.com')
+        self.mock_user_repository.get_user.assert_called_once_with(
+            'test@example.com'
+        )
 
     def test_get_user_profile_user_not_found(self):
         # Arrange
         token = 'mock_token'
-        self.mock_user_service.verify_token.return_value = {'email': 'unknown@example.com'}
+        self.mock_user_service.verify_token.return_value = {
+            'email': 'unknown@example.com'
+        }
         self.mock_user_repository.get_user.return_value = None
 
         # Act

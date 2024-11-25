@@ -3,11 +3,13 @@ import os
 import tempfile
 from models.user import UserRole, UserDTO, UserRepository
 
+
 class TestUserRole:
     def test_user_role_values(self):
         """Test that UserRole enum has correct values"""
         assert UserRole.ADMIN.value == "Admin"
         assert UserRole.USER.value == "User"
+
 
 class TestUserDTO:
     @pytest.fixture
@@ -36,7 +38,8 @@ class TestUserDTO:
         }
 
     def test_to_safe_dict(self, sample_user):
-        """Test to_safe_dict method returns dictionary without sensitive information"""
+        """Test to_safe_dict method returns
+        dictionary without sensitive information"""
         safe_dict = sample_user.to_safe_dict()
         assert safe_dict == {
             'name': 'Test User',
@@ -44,6 +47,7 @@ class TestUserDTO:
         }
         assert 'email' not in safe_dict
         assert 'password_hash' not in safe_dict
+
 
 class TestUserRepository:
     @pytest.fixture
@@ -84,7 +88,12 @@ class TestUserRepository:
 
     def test_create_duplicate_user(self, populated_repository):
         """Test creating a user with existing email raises ValueError"""
-        duplicate_user = UserDTO("user1@example.com", "Duplicate", UserRole.USER, "hash")
+        duplicate_user = UserDTO(
+            "user1@example.com",
+            "Duplicate",
+            UserRole.USER,
+            "hash"
+        )
         with pytest.raises(ValueError, match="User already exists"):
             populated_repository.create_user(duplicate_user)
 
@@ -104,24 +113,26 @@ class TestUserRepository:
         """Test saving users to file and loading them back"""
         # Get initial users
         initial_users = populated_repository.get_all_users()
-        
+
         # Create new repository instance with same file to test loading
         new_repository = UserRepository(temp_file)
         loaded_users = new_repository.get_all_users()
-        
+
         # Compare users
         assert len(loaded_users) == len(initial_users)
         for user in loaded_users:
             assert user.email in [u.email for u in initial_users]
             assert user.name in [u.name for u in initial_users]
             assert user.role in [u.role for u in initial_users]
-            assert user.password_hash in [u.password_hash for u in initial_users]
+            assert user.password_hash in [
+                u.password_hash for u in initial_users
+            ]
 
     def test_save_users_with_invalid_path(self, temp_file):
         """Test saving users with invalid file path"""
         repository = UserRepository(temp_file)
         repository.file_path = "/invalid/path/users.py"
-        
+
         with pytest.raises(Exception):
             repository.save_users()
 
@@ -130,6 +141,6 @@ class TestUserRepository:
         # Write invalid content to file
         with open(temp_file, 'w') as f:
             f.write("invalid content")
-        
+
         repository = UserRepository(temp_file)
-        assert len(repository.users) == 0  # Should initialize empty dict on error
+        assert len(repository.users) == 0

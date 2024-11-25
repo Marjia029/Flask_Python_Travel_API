@@ -7,6 +7,7 @@ from controllers.user_controller import UserController
 from services.user_service import UserService
 from models.user import UserRole
 
+
 def setup_user_routes(api, user_controller: UserController, user_service: UserService):
     """
     Setup user-related routes with Swagger documentation.
@@ -21,7 +22,7 @@ def setup_user_routes(api, user_controller: UserController, user_service: UserSe
     """
     user_ns = api.namespace(
         'user',
-        description='User management operations including registration, authentication, and profile management'
+        description='User management operations including registration, login, and profile management'
     )
 
     def token_required(roles: Optional[list] = None):
@@ -124,8 +125,10 @@ def setup_user_routes(api, user_controller: UserController, user_service: UserSe
             """
             Register a new user
             
-            Creates a new user account with the provided details and returns a JWT token.
-            Password must be at least 8 characters long and contain at least one uppercase letter,
+            Creates a new user account with the provided details
+            and returns a JWT token.
+            Password must be at least 8 characters long and contain
+            at least one uppercase letter,
             one lowercase letter, one number, and one special character.
             """
             return user_controller.register_user(request.json)
@@ -139,8 +142,10 @@ def setup_user_routes(api, user_controller: UserController, user_service: UserSe
             """
             Authenticate user and return token
             
-            Validates user credentials and returns a JWT token for authenticated requests.
-            The token should be included in the Authorization header of subsequent requests
+            Validates user credentials and returns a JWT token for
+            authenticated requests.
+            The token should be included in the Authorization header of
+            subsequent requests
             using the Bearer scheme.
             """
             return user_controller.login_user(request.json)
@@ -156,7 +161,8 @@ def setup_user_routes(api, user_controller: UserController, user_service: UserSe
             """
             Get all users (Admin only)
             
-            Returns a list of all registered users. This endpoint is restricted to
+            Returns a list of all registered users.
+            This endpoint is restricted to
             administrators only and requires a valid JWT token with admin role.
             """
             return user_controller.get_all_users()
@@ -170,8 +176,8 @@ def setup_user_routes(api, user_controller: UserController, user_service: UserSe
         def get(self) -> Dict[str, Any]:
             """
             Get current user profile
-            
-            Returns the profile information of the currently authenticated user.
+            Returns the profile information of the
+            currently authenticated user.
             Requires a valid JWT token in the Authorization header.
             """
             token = request.headers['Authorization'].split(' ')[1]

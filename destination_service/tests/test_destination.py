@@ -17,7 +17,9 @@ class TestDestinationModel(unittest.TestCase):
         """Test the initialization of the Destination object."""
         self.assertEqual(self.destination.id, 1)
         self.assertEqual(self.destination.name, "Paris")
-        self.assertEqual(self.destination.description, "The city of light and love.")
+        self.assertEqual(
+            self.destination.description, "The city of light and love."
+        )
         self.assertEqual(self.destination.location, "France")
         self.assertEqual(self.destination.price_per_night, 200.0)
 

@@ -7,6 +7,7 @@ from werkzeug.security import generate_password_hash
 
 from services.user_service import UserService
 
+
 class TestUserService(unittest.TestCase):
 
     def setUp(self):
@@ -17,7 +18,7 @@ class TestUserService(unittest.TestCase):
         self.test_role = "user"
         self.test_password = "password123"
         self.hashed_password = generate_password_hash(self.test_password)
-        
+
         # Activate the app context for testing
         self.app_context = self.app.app_context()
         self.app_context.push()
@@ -30,7 +31,7 @@ class TestUserService(unittest.TestCase):
         # Test the token generation
         token = UserService.generate_token(self.test_email, self.test_role)
         self.assertIsInstance(token, str)
-        
+
         decoded_token = jwt.decode(
             token,
             self.app.config['SECRET_KEY'],
@@ -52,18 +53,27 @@ class TestUserService(unittest.TestCase):
         # Test password hashing
         hashed_password = UserService.hash_password(self.test_password)
         self.assertNotEqual(self.test_password, hashed_password)
-        
-        # Verify that the hashed password works with the password verifier
-        self.assertTrue(UserService.verify_password(hashed_password, self.test_password))
 
+        # Verify that the hashed password works with the password verifier
+        self.assertTrue(UserService.verify_password(
+            hashed_password,
+            self.test_password
+        ))
 
     def test_verify_password(self):
         # Test password verification
-        is_valid = UserService.verify_password(self.hashed_password, self.test_password)
+        is_valid = UserService.verify_password(
+            self.hashed_password,
+            self.test_password
+        )
         self.assertTrue(is_valid)
-        
-        is_invalid = UserService.verify_password(self.hashed_password, "wrongpassword")
+
+        is_invalid = UserService.verify_password(
+            self.hashed_password,
+            "wrongpassword"
+        )
         self.assertFalse(is_invalid)
+
 
 if __name__ == "__main__":
     unittest.main()

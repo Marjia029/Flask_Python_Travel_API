@@ -13,6 +13,7 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 
+
 def create_app(config=DevelopmentConfig):
     app = Flask(__name__)
     app.config.from_object(config)
@@ -43,6 +44,7 @@ def create_app(config=DevelopmentConfig):
     setup_user_routes(api, user_controller, user_service)
 
     return app
+
 
 if __name__ == '__main__':
     app = create_app()

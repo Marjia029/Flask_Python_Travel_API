@@ -1,6 +1,5 @@
 import os
-import json
-import ast 
+import ast
 from functools import wraps
 from typing import Dict, Optional, Union
 
@@ -37,7 +36,6 @@ api = Api(
     description='A service for handling authentication and authorization with JWT tokens',
     authorizations=authorizations,
     security='Bearer Auth'
-      # Swagger UI will be available at /docs
 )
 
 # Namespace
@@ -52,7 +50,6 @@ token_response = auth_ns.model('TokenResponse', {
         description='User email',
         example='user@example.com'
     ),
-    
     'role': fields.String(
         description='User role',
         example='admin'
@@ -129,13 +126,15 @@ class TokenValidation(Resource):
     def get(self) -> Union[Dict, tuple]:
         """
         Validate JWT Token
-        
-        This endpoint validates the provided JWT token and returns its decoded contents
-        if valid. The token should be provided in the Authorization header using the
+
+        This endpoint validates the provided JWT token and returns
+        its decoded contents
+        if valid. The token should be provided in the Authorization
+        header using the
         Bearer <token>.
-        
         Returns:
-            Union[Dict, tuple]: Decoded token data or error message with status code
+            Union[Dict, tuple]: Decoded token data or error
+            message with status code
         """
         try:
             token = request.headers.get('Authorization', '').split(' ')[1]

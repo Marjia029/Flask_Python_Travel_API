@@ -11,7 +11,11 @@ class TestDestinationRoutes(unittest.TestCase):
 
     @patch('routes.destination_routes.DestinationRepository')
     @patch('routes.destination_routes.AuthService')
-    def test_delete_destination_success(self, mock_auth_service, mock_repository):
+    def test_delete_destination_success(
+        self,
+        mock_auth_service,
+        mock_repository
+    ):
         """Test successful deletion of a destination by an admin."""
         # Mock admin token validation
         mock_auth_service.return_value.validate_admin_token.return_value = True
@@ -28,7 +32,11 @@ class TestDestinationRoutes(unittest.TestCase):
 
     @patch('routes.destination_routes.DestinationRepository')
     @patch('routes.destination_routes.AuthService')
-    def test_delete_destination_not_found(self, mock_auth_service, mock_repository):
+    def test_delete_destination_not_found(
+        self,
+        mock_auth_service,
+        mock_repository
+    ):
         """Test deletion attempt for a non-existent destination."""
         # Mock admin token validation
         mock_auth_service.return_value.validate_admin_token.return_value = True

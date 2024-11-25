@@ -21,6 +21,7 @@ All services follow **OpenAPI/Swagger** standards, ensuring comprehensive API do
 
 ### **User Service**
 - Register new users.
+- Login to the specific user account
 - Authenticate users and provide access tokens.
 - View user-specific profiles.
 
@@ -42,12 +43,64 @@ Install dependencies using the `requirements.txt` files included in each service
 
 ---
 
+## Folder structure
+```bash
+Flask_Python_Travel_API/
+│
+├── destination_service/
+│   ├── app.py
+│   ├── requirements.txt
+│   ├──models/
+│   |  └── destination.py
+|   |  └── destination_repository.py
+|   ├──controllers/
+│   |  └── destination_controller.py
+|   ├──routes/
+│   |  └── destination_routes.py
+|   ├──services/
+│   |  └── auth_service.py
+|   ├──tests/
+│   |  └── __init__.py
+│   |  └── test_auth.py
+│   |  └── test_destination.py
+|   |  └── test_destination_repository.py
+│   |  └── test_destination_controller.py
+│   |  └── test_destination_routes.py
+├── user_service/
+│   ├── app.py
+│   ├── requirements.txt
+│   ├──models/
+│   |  └── user.py
+│   ├──repoisitory/
+|   |  └── user_repository.py
+|   ├──controllers/
+│   |  └── user_controller.py
+|   ├──routes/
+│   |  └── user_routes.py
+|   ├──services/
+│   |  └── user_service.py
+|   ├──tests/
+│   |  └── __init__.py
+│   |  └── test_user.py
+|   |  └── test_destination_repository.py
+│   |  └── test_destination_controller.py
+│   |  └── test_destination_routes.py
+├── auth_service/
+│       ├── app.py
+│       ├── requirements.txt
+│       └── tests/
+│           └── __init__.py
+│           └── test_app.py
+│
+└── README.md
+```
+
 ## **Setup Instructions**
 ### **1. Clone the repository**
 Clone the repository to your local machine:
 ```bash
-git clone https://github.com/your-repo/travel-api.git
-cd travel-api
+git clone https://github.com/Marjia029/Flask_Python_Travel_API.git
+cd Flask_Python_Travel_API
 ```
 ### **2. Install dependencies**
 
@@ -86,14 +139,14 @@ python app.py
 
 Swagger UI is available for all services:
 
-- Destination Service: http://localhost:5001
-- User Service: http://localhost:5003
-- Authentication Service: http://localhost:5006
+- Destination Service: ```http://localhost:5001```
+- User Service: ```http://localhost:5003```
+- Authentication Service: ```http://localhost:5006```
 
 ## Example Requests
 ### Register a User
 
-Endpoint: POST http://localhost:5003/user/register
+Endpoint: POST ```http://localhost:5003/user/register```
 
 Request Body:
 ```json
@@ -106,7 +159,7 @@ Request Body:
 ```
 ### Login a User
 
-Endpoint: POST http://localhost:5003/login
+Endpoint: POST ```http://localhost:5003/user/login```
 Request Body:
 ```json
 {
@@ -116,31 +169,38 @@ Request Body:
 ```
 ### Get Destinations
 
-Endpoint: GET http://localhost:5001/destinations
+Endpoint: GET ```http://localhost:5001/destinations/```
 
-Headers
-```json
-{
-  "Authorization": "Bearer <ACCESS_TOKEN>"
-}
-```
+
 ### Delete a Destination
 
-Endpoint: DELETE http://localhost:5001/destinations/1
+Endpoint: DELETE ```http://localhost:5001/destinations/1```
 
 Headers:
 ```json
 {
-  "Authorization": "Bearer <ACCESS_TOKEN>",
-  "Role": "Admin"
+  "Authorization": "Bearer <ACCESS_TOKEN>"
+
 }
 ```
 Request Body:
 ```json
 {
-    id: "1"
+    "id": "1"
 }
 ```
+***Note:*** Please validate the admin token first at ```http://localhost:5006/validate```
+## Run Tests
+Run tests with pytest to ensure at least 70% code coverage:
+```bash
+pytest tests/
+```
+## Contributing
+To contribute to this project:
 
+- Fork the repository.
+- Create a feature branch (git checkout -b feature-name).
+- Commit changes with descriptive messages.
+- Open a pull request.
 
 

@@ -2,6 +2,7 @@
 
 import requests
 
+
 class AuthService:
     @staticmethod
     def validate_admin_token(token):

@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import MagicMock, ANY
-from flask_restx import Api, Model, fields
+from flask_restx import Api, Model
 from controllers.destination_controller import DestinationController
 from models.destination_repository import DestinationRepository
 from services.auth_service import AuthService
@@ -18,7 +18,9 @@ class TestDestinationController(unittest.TestCase):
 
     def test_initialization(self):
         """Test that the controller initializes with the correct attributes."""
-        self.assertIsInstance(self.controller.repository, DestinationRepository)
+        self.assertIsInstance(
+            self.controller.repository, DestinationRepository
+        )
         self.assertEqual(self.controller.api, self.mock_api)
 
     def test_destination_model_definition(self):

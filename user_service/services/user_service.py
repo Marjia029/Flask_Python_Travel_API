@@ -5,6 +5,7 @@ import jwt
 from flask import current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 class UserService:
     @staticmethod
     def generate_token(user_email: str, role: str) -> str:
